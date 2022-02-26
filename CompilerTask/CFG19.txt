@@ -1,0 +1,71 @@
+Program -> MethodDecls
+
+MethodDecls -> MethodDecls MethodDecl | MethodDecl
+	    -> MetodDecl MethodDecls'
+
+MethodDecls' -> MethodDecl MehtodDecls' | eps
+
+
+
+MethodDecl -> Type [MAIN] Identifier '(' Parameters ')' Block
+Type -> int | real
+
+Parameters -> Parameters ',' Parameter | Parameter
+	   -> Parameter Parameter' | eps
+Parameter' -> ',' Parameter Parameter' | eps
+
+
+
+Parameter -> Type Identifier
+
+Block -> begin Statements end
+
+Statements -> Statements Statement | Statement
+   	   -> Statement Statements'
+
+Statments' -> Statement Statments' | eps
+
+Statement -> Block | VariableDecl | AssignmentStatement | ReturnStatement | IFStatment| WriteStatement | ReadStatement
+
+
+
+VariableDecls -> Type VariableDecl VariableDeclsDash
+VariableDecl -> Id Definition;
+VariableDeclsDash -> , VariableDecl VariableDeclsDash | ;
+Definition-> := Exp | eps
+
+
+AssignmentStatement -> Identifier := Exp ';'
+
+ReturnStatment -> return Exp ';'
+
+IfStatement -> if '(' BooleanExp ')' Statement | if '(' BooleanExp ')' Statement else Statement
+	    -> if '('BooleanExp  ')' Statement tmpExpression
+
+tmpExpression -> else Statement | eps
+
+WriteStatment -> write '(' Exp ',' String ')' ';'
+
+ReadStatment -> read '(' Identifier ',' String ')' ';'
+
+Exp -> Exp AddOp Term | Term
+    -> Term Exp' 	
+	
+Exp'-> AddOp Term Exp' | eps
+
+Term -> Term MulOP Factor | Factor
+     -> Factor Term'
+
+Term'-> MulOp Factor Term' | eps
+
+Factor -> Identifier | number
+
+AddOP -> '+' | '-'
+
+MulOP -> '*' | '/'
+
+BooleanExp -> Exp RemExp
+
+RemExp -> '==' Exp | '!=' Exp
+
+// Don't forget check errors
